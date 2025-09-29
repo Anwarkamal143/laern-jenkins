@@ -3,14 +3,28 @@ pipeline {
 
     stages {
         stage('Build') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    // args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Building...'
+                sh '''
+                ls -la
+                node --version
+                npm --version
+                npm ci
+                npm run build
+                ls -la
+                '''
                 // Add your build steps here
             }
         }
         stage('Test') {
             steps {
-                echo 'Testing...'
+                sh 'npm run test'
                 // Add your test steps here
             }
         }
@@ -18,6 +32,12 @@ pipeline {
             steps {
                 echo 'Deploying...'
                 // Add your deploy steps here
+            }
+        }
+        stage('Start') {
+            steps {
+                echo 'npm run start'
+                // Add your notification steps here
             }
         }
     }
