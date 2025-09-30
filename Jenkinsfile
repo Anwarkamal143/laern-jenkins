@@ -52,7 +52,6 @@ pipeline {
             }
             steps {
                 sh '''
-              npx netflify-cli --version
               echo "Deploying to Netlify site ID: $NETLIFY_SITE_ID"
               npx netlify deploy --dir=build --prod --site=$NETLIFY_SITE_ID
                 '''
