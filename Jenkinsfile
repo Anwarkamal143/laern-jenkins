@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+         docker {
+            image 'node:20-alpine'
+            reuseNode true
+        }
+    }
     environment {
         // Define any environment variables here
         NETLIFY_SITE_ID = 'd214bb7d-f7b7-4d6b-aab5-20f4df7c4554'
@@ -28,13 +33,7 @@ pipeline {
             }
         }
         stage('Test') {
-            agent {
-                docker {
-                    image 'node:20-alpine'
-                    // args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    reuseNode true
-                }
-            }
+
             steps {
                 sh '''
                 test -f build/index.html
@@ -44,19 +43,12 @@ pipeline {
             }
         }
         stage('Deploy') {
-            agent {
-                docker {
-                    image 'node:20-alpine'
-                    // args '-v /var/run/docker.sock:/var/run/docker.sock'
-                    reuseNode true
-                }
-            }
             steps {
                 sh '''
                 npm i netlify-cli 
-                node_modules/.bin/netlify --version
+                npx netlify --version
               echo "Deploying to Netlify site ID: $NETLIFY_SITE_ID with auth token $NETLIFY_AUTH_TOKEN"
-              node_modules/.bin/netlify  deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID 
+              npx netlify  deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID 
                 '''
                 // Add your build steps here
             }
