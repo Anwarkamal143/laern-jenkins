@@ -39,7 +39,6 @@ pipeline {
         stage('Deploy') {
             steps {
                 sh '''
-                npm i netlify-cli 
                 npx netlify --version
               echo "Deploying to Netlify site ID: $NETLIFY_SITE_ID with auth token $NETLIFY_AUTH_TOKEN"
               npx netlify  deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID 
