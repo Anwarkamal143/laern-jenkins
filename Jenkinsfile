@@ -1,5 +1,9 @@
 pipeline {
     agent any
+    environment {
+        // Define any environment variables here
+        NETLIFY_SITE_ID = '00d484b7-a9e3-43f8-b78d-064fe12116ec'
+    }
 
     stages {
         stage('Build') {
@@ -39,9 +43,21 @@ pipeline {
             }
         }
         stage('Deploy') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    // args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
             steps {
-                echo 'Deploying...'
-                // Add your deploy steps here
+                sh '''
+              npm install -g netlify-cli
+              netflify --version
+              echo "Deploying to Netlify site ID: $NETLIFY_SITE_ID"
+              netlify deploy --dir=build --prod --site=$NETLIFY_SITE_ID
+                '''
+                // Add your build steps here
             }
         }
         stage('Start') {
