@@ -55,6 +55,7 @@ pipeline {
     post {
         always {
             echo 'This will always run after the stages.'
+            junit 'test-results/**/*.xml'
         }
         success {
             echo 'This will run only if the pipeline succeeds.'
