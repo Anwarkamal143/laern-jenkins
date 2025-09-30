@@ -56,7 +56,7 @@ pipeline {
                 npm i netlify-cli 
                 node_modules/.bin/netlify --version
               echo "Deploying to Netlify site ID: $NETLIFY_SITE_ID with auth token $NETLIFY_AUTH_TOKEN"
-              node_modules/.bin/netlify  deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID --build false
+              node_modules/.bin/netlify  deploy --dir=build --prod --auth=$NETLIFY_AUTH_TOKEN --site=$NETLIFY_SITE_ID
                 '''
                 // Add your build steps here
             }
