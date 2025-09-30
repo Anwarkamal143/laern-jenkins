@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         // Define any environment variables here
-        NETLIFY_PROJECT_ID = '00d484b7-a9e3-43f8-b78d-064fe12116ec'
+        NETLIFY_SITE_ID = '00d484b7-a9e3-43f8-b78d-064fe12116ec'
         NETLIFY_AUTH_TOKEN = credentials('netlify-token')
     }
 
@@ -56,7 +56,7 @@ pipeline {
                 npm i netlify-cli 
                 node_modules/.bin/netflify --version
               echo "Deploying to Netlify site ID: $NETLIFY_PROJECT_ID"
-              node_modules/.bin/netflify  deploy --dir=build --prod --site=$NETLIFY_PROJECT_ID --auth=$NETLIFY_AUTH_TOKEN
+              node_modules/.bin/netflify  deploy --dir=build --prod 
                 '''
                 // Add your build steps here
             }
