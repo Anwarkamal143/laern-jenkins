@@ -23,8 +23,18 @@ pipeline {
             }
         }
         stage('Test') {
+            agent {
+                docker {
+                    image 'node:20-alpine'
+                    // args '-v /var/run/docker.sock:/var/run/docker.sock'
+                    reuseNode true
+                }
+            }
             steps {
-                sh 'test -f build/index.html'
+                sh '''
+                test -f build/index.html
+                npm test
+                '''
                 // Add your test steps here
             }
         }
