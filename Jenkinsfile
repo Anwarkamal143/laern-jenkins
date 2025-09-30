@@ -24,8 +24,7 @@ pipeline {
         }
         stage('Test') {
             steps {
-                // sh 'npm run test'
-                echo 'Testing...'
+                sh 'test -f build/index.html'
                 // Add your test steps here
             }
         }
