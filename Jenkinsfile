@@ -54,9 +54,9 @@ pipeline {
             steps {
                 sh '''
                 npm i netlify-cli 
-                node_modules/.bin/netflify --version
+                node_modules/.bin/netlify --version
               echo "Deploying to Netlify site ID: $NETLIFY_PROJECT_ID"
-              node_modules/.bin/netflify  deploy --dir=build --prod 
+              node_modules/.bin/netlify  deploy --dir=build --prod 
                 '''
                 // Add your build steps here
             }
